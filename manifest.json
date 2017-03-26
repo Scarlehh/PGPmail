@@ -19,7 +19,7 @@
 		"https://mail.google.com/",
 		"https://inbox.google.com/"
 	],
-	"content_scripts" : [ {
+	"content_scripts": [{
 			"matches": [
 				"https://mail.google.com/*",
 				"https://inbox.google.com/*"
@@ -28,6 +28,8 @@
 				"inboxsdk.js",
 				"intercept.js"
 			]
-		}
+	}],
+	"web_accessible_resources": [
+		"encryptButton.png"
 	]
 }
