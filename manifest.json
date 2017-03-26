@@ -15,16 +15,19 @@
 			"encrypt.js"
 		]
 	},
-	"content_scripts": [
-		{
-			"matches": ["*://mail.google.com/*"],
-			"js": [
-				"inject.js"
-			],
-			"run_at": "document_end"
-		}
+	"permissions": [
+		"https://mail.google.com/",
+		"https://inbox.google.com/"
 	],
-	"web_accessible_resources": [
-		"intercept.js"
+	"content_scripts" : [ {
+			"matches": [
+				"https://mail.google.com/*",
+				"https://inbox.google.com/*"
+			],
+			"js": [
+				"inboxsdk.js",
+				"intercept.js"
+			]
+		}
 	]
 }
