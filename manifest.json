@@ -12,6 +12,7 @@
 	},
 	"background": {
 		"scripts": [
+			"openpgp.js",
 			"encrypt.js"
 		]
 	},
