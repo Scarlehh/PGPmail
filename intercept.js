@@ -3,7 +3,7 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 		composeView.addButton({
 			title: "Encrypt",
 			iconClass: "encryptButton",
-			iconUrl: chrome.extension.getURL("encryptButton.png"),
+			iconUrl: chrome.extension.getURL("resources/images/encryptButton.png"),
 			onClick: function(event) {
 				event.composeView.setBodyText("ENCRYPTED");
 			},
