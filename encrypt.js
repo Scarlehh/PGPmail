@@ -1,19 +1,3 @@
-function newKeyPair(name, email, password) {
-	var options = {
-		userIds: [{
-			name: name,
-			email: email,
-		}],
-		numBits: 4096,
-		passphrase: password
-	}
-
-	openpgp.generateKey(options).then(function(key) {
-		console.log(key.privateKeyArmored);
-		console.log(pubkey = key.publicKeyArmored);
-	});
-}
-
 function encrypt(message, publicKey) {
 	var options = {
 		data: message,
