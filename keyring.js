@@ -38,7 +38,7 @@ function storeKey(name, email, pubKey) {
 	});
 }
 
-function getKeys() {
+function setEmailList() {
 	chrome.storage.local.get(function(keys) {
 		var emailList = document.getElementById("emails");
 		for(var key in keys) {
@@ -49,4 +49,4 @@ function getKeys() {
 	});
 }
 
-getKeys();
+setEmailList();
