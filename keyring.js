@@ -49,4 +49,15 @@ function setEmailList() {
 	});
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    var keyGenButton = document.getElementById('keySaveButton');
+    keyGenButton.addEventListener('click', function() {
+		var elements = document.getElementsByClassName("keySave");
+        storeKey(elements['name'].value,
+				 elements['email'].value,
+				 elements['pubKey'].value);
+		window.location.reload();
+    });
+});
+
 setEmailList();
