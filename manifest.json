@@ -10,12 +10,6 @@
 		"default_icon": "resources/images/icon.png",
 		"default_popup": "popup.html"
 	},
-	"background": {
-		"scripts": [
-			"resources/js/openpgp.js",
-			"encrypt.js"
-		]
-	},
 	"permissions": [
 		"storage"
 	],
@@ -26,7 +20,9 @@
 			],
 			"js": [
 				"resources/js/inboxsdk.js",
-				"intercept.js"
+				"intercept.js",
+				"resources/js/openpgp.js",
+				"encrypt.js"
 			]
 	}],
 	"web_accessible_resources": [
