@@ -1,12 +1,10 @@
 function encrypt(message, publicKey) {
 	var options = {
 		data: message,
-		publicKeys: openpgp.key.readArmored(pubkey).keys
+		publicKeys: openpgp.key.readArmored(publicKey).keys
 	};
 
-	return openpgp.encrypt(options).then(function(ciphertext) {
-		console.log(ciphertext.data);
-	});
+	return openpgp.encrypt(options);
 }
 
 function decrypt(cipher, privateKey, password) {
