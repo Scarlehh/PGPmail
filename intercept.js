@@ -1,11 +1,25 @@
 InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 	sdk.Compose.registerComposeViewHandler(function(composeView){
+
 		composeView.addButton({
 			title: "Encrypt",
 			iconClass: "encryptButton",
 			iconUrl: chrome.extension.getURL("resources/images/encryptButton.png"),
 			onClick: function(event) {
-				event.composeView.setBodyText("ENCRYPTED");
+				var address = composeView.getToRecipients()[0].emailAddress;
+				chrome.storage.local.get(address, function(key) {
+					for(var add in key) {
+						encrypt(event.composeView.getHTMLContent(), key[add].pubKey)
+							.then(function(ciphertext) {
+								var html = "";
+								var lines = ciphertext.data.split("\n");
+								for(line in lines) {
+									html += lines[line] + "<br>";
+								}
+								event.composeView.setBodyHTML(html);
+							});
+					}
+				});
 			},
 			enabled: false
 		});
