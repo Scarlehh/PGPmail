@@ -4,10 +4,20 @@
 		<script type="text/javascript" src="keyring.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	</head>
-	<body>
+	<body style="width:250px">
 		<div id="public">
 			<h3>Public Keys:</h3>
 			<ul id="emails"></ul>
+		</div>
+
+		<div id="keySaveForm">
+			<div class="form-group">
+				<label for="keySave"><h3>Save Key:</h3></label>
+				<input class="form-control keySave" type="text" placeholder="Name" name="name">
+				<input class="form-control keySave" type="email" placeholder="Email" name="email">
+				<textarea class="form-control keySave" type="text" placeholder="Public Key" name="pubKey"></textarea>
+			</div>
+			<button id="keySaveButton" type="button" class="btn btn-primary">Save</button>
 		</div>
 	</body>
 </html>
