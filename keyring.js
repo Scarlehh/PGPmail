@@ -38,6 +38,7 @@ function storeKey(name, email, pubKey) {
 	};
 	chrome.storage.local.set(details, function() {
 		console.log("Stored key pair at", email);
+		window.location.reload();
 	});
 }
 
@@ -84,10 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var keySaveButton = document.getElementById('keySaveButton');
     keySaveButton.addEventListener('click', function() {
 		var elements = document.getElementsByClassName("keySave");
-        storeKey(elements['name'].value,
-				 elements['email'].value,
-				 elements['pubKey'].value);
-		window.location.reload();
+		if(elements['privKey'].value === "") {
+			storeKey(elements['name'].value,
+					 elements['email'].value,
+					 elements['pubKey'].value);
+		} else {
+			storeKeyPair(elements['name'].value,
+						 elements['email'].value,
+						 elements['pubKey'].value,
+						 elements['privKey'].value);
+		}
     });
 
 	// Backend for key gen
