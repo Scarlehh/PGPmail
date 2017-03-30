@@ -27,21 +27,34 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 		var encryptButton = document.getElementsByClassName("inboxsdk__button")[0];
 		encryptButton.style = "display: none";
 
-		composeView.on("toContactAdded", function(event) {
-			console.log(event.contact.emailAddress, "added.");
+		composeView.on("recipientsChanged", function(event) {
+			console.log(event, "added.");
 			chrome.storage.local.get(function(keys) {
-				for(var key in keys) {
-					if(key === event.contact.emailAddress) {
-						encryptButton.style = "";
-					}
+				if(canEncrypt(keys)) {
+					encryptButton.style = "";
+				} else {
+					encryptButton.style = "display: none";
 				}
 			});
 		});
 
-		composeView.on("toContactRemoved", function(event) {
-			console.log(event.contact.emailAddress, "removed.");
-			encryptButton.style = "display: none";
-		});
+		function canEncrypt(keys) {
+			// Don't encrypt if people BCC'd
+			if(composeView.getBccRecipients().length !== 0) {
+				return false;
+			}
+			var recipients = composeView.getToRecipients().concat(composeView.getCcRecipients());
+			var ownedKeys = 0;
+			for(var i = 0; i < recipients.length; i++) {
+				if(keys[recipients[i].emailAddress] !== undefined) {
+					ownedKeys++;
+				}
+			}
+			if(ownedKeys < recipients.length || ownedKeys === 0) {
+				return false;
+			}
+			return true;
+		}
 	});
 
 	sdk.Conversations.registerThreadViewHandler(function(threadView) {
