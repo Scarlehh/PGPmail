@@ -5,7 +5,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	</head>
 	<body style="width:400px">
-		<div class="container">
+		<div class="container" style="margin: 10px">
 			<div id="public">
 				<h3>Public Keys:</h3>
 				<div id="pubEmails"></div>
@@ -19,10 +19,10 @@
 			<div id="keySaveForm">
 				<div class="form-group">
 					<label for="keySave"><h3>Save Key:</h3></label>
-					<input class="form-control keySave" type="text" placeholder="Name" name="name">
-					<input class="form-control keySave" type="email" placeholder="Email" name="email">
-					<textarea class="form-control keySave" type="text" placeholder="Public Key" name="pubKey"></textarea>
-					<textarea class="form-control keySave" type="text" placeholder="Private Key (optional)" name="privKey"></textarea>
+					<input class="form-control keySave" style="margin: 5px" type="text" placeholder="Name" name="name">
+					<input class="form-control keySave" style="margin: 5px" type="email" placeholder="Email" name="email">
+					<textarea class="form-control keySave" style="margin: 5px" type="text" placeholder="Public Key" name="pubKey"></textarea>
+					<textarea class="form-control keySave" style="margin: 5px" type="text" placeholder="Private Key (optional)" name="privKey"></textarea>
 				</div>
 				<button id="keySaveButton" type="button" class="btn btn-primary">Save</button>
 			</div>
@@ -30,9 +30,9 @@
 			<div id="keyGenForm">
 				<div class="form-group">
 					<label for="keyGen"><h3>Generate Key Pair:</h3></label>
-					<input class="form-control keyGen" type="text" placeholder="Name" name="name">
-					<input class="form-control keyGen" type="email" placeholder="Email" name="email">
-					<input class="form-control keyGen" type="password" placeholder="Passphrase" name="passphrase">
+					<input class="form-control keyGen" style="margin: 5px" type="text" placeholder="Name" name="name">
+					<input class="form-control keyGen" style="margin: 5px" type="email" placeholder="Email" name="email">
+					<input class="form-control keyGen" style="margin: 5px" type="password" placeholder="Passphrase" name="passphrase">
 				</div>
 				<button id="keyGenButton" type="button" class="btn btn-primary">Generate</button>
 			</div>
