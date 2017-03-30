@@ -9,7 +9,7 @@ function encrypt(message, publicKey) {
 
 function decrypt(cipher, privateKey, password) {
 	var options = {
-		privateKey: openpgp.key.readArmored(privkey).keys[0],
+		privateKey: openpgp.key.readArmored(privateKey).keys[0],
 		passphrase: password
 	};
 
