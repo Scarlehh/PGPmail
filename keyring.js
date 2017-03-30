@@ -41,17 +41,39 @@ function storeKey(name, email, pubKey) {
 	});
 }
 
+function removeKey() {
+	var button = event.target;
+	chrome.storage.local.remove(button.id);
+	window.location.reload();
+}
+
 function setEmailList() {
 	chrome.storage.local.get(function(keys) {
 		var pubList = document.getElementById("pubEmails");
 		var privList = document.getElementById("privEmails");
+
 		for(var key in keys) {
-			var item = document.createElement("li");
-			item.innerHTML = key;
+			// Set button
+			button = document.createElement("button");
+			button.innerText = "x";
+			button.style.display = "inline";
+			button.style.margin = "5px";
+			button.onclick = removeKey;
+			button.id = key;
+			button.className = "btn btn-danger btn-xs"
+			// Set url
+			p = document.createElement('p');
+			p.style.display = "inline"
+			p.innerText += key;
+			// Stick inside div
+			div = document.createElement("div")
+			div.appendChild(button);
+            div.appendChild(p);
+
 			if(keys[key].privKey !== undefined) {
-				privList.appendChild(item);
+				privList.appendChild(div);
 			} else {
-				pubList.appendChild(item);
+				pubList.appendChild(div);
 			}
 		}
 	});
