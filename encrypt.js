@@ -7,20 +7,20 @@ function encrypt(message, publicKey) {
 	return openpgp.encrypt(options);
 }
 
-function decrypt(cipher, privateKey, password) {
+function decryptKey(privateKey, password) {
 	var options = {
 		privateKey: openpgp.key.readArmored(privateKey).keys[0],
 		passphrase: password
 	};
 
-	openpgp.decryptKey(options).then(function(decryptedKey) {
-		options = {
-			message: openpgp.message.readArmored(cipher),
-			privateKey: decryptedKey.key
-		};
+	return openpgp.decryptKey(options);
+}
 
-		openpgp.decrypt(options).then(function(plaintext) {
-			console.log(plaintext.data)
-		});
-	});
+function decrypt(cipher, decryptedKey) {
+	options = {
+		message: openpgp.message.readArmored(cipher),
+		privateKey: decryptedKey.key
+	};
+
+	return openpgp.decrypt(options);
 }
