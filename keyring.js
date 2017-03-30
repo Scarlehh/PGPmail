@@ -56,7 +56,7 @@ function setEmailList() {
 		for(var key in keys) {
 			// Set button
 			button = document.createElement("button");
-			button.innerText = "x";
+			button.innerHTML = "&#10006;";
 			button.style.display = "inline";
 			button.style.margin = "5px";
 			button.onclick = removeKey;
