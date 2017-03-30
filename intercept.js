@@ -66,7 +66,11 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 									chrome.storage.local.get(sdk.User.getEmailAddress(), function(keys) {
 										var passphrase = prompt("Enter your passphrase");
 										var key = keys[sdk.User.getEmailAddress()];
-										decrypt(rawMessage, key["privKey"], passphrase);
+										decryptKey(key["privKey"], passphrase).then(function(decryptedKey) {
+											decrypt(rawMessage, decryptedKey).then(function(plaintext) {
+												document.getElementById(message.id).firstChild.firstChild.innerHTML = plaintext.data;
+											});
+										});
 									});
 								}
 							}
