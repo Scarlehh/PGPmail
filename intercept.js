@@ -5,7 +5,7 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 			iconClass: "encryptButton",
 			iconUrl: chrome.extension.getURL("resources/images/encryptButton.png"),
 			onClick: function(clickEvent) {
-				var address = composeView.getToRecipients();//[0].emailAddress;
+				var address = composeView.getToRecipients().concat(composeView.getCcRecipients());
 				chrome.storage.local.get(function(keys) {
 					var pubKeys = [];
 					for(var i = 0; i < address.length; i++) {
@@ -76,7 +76,6 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 								var passphrase = prompt("Enter your passphrase");
 								var key = keys[sdk.User.getEmailAddress()];
 								decryptKey(key["privKey"], passphrase).then(function(decryptedKey) {
-									console.log("decrypting key");
 									decrypt(rawMessage, decryptedKey).then(function(plaintext) {
 										var html = "";
 										var lines = plaintext.data.split("\n");

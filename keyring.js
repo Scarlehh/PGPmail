@@ -8,9 +8,8 @@ function newKeyPair(name, email, password) {
 		passphrase: password
 	}
 
-	console.log("generating");
 	openpgp.generateKey(options).then(function(key) {
-		console.log("generate");
+		console.log("Generated key pair");
 		storeKeyPair(name, email,
 					 key.publicKeyArmored,
 					 key.privateKeyArmored);
@@ -37,7 +36,7 @@ function storeKey(name, email, pubKey) {
 		"pubKey": pubKey
 	};
 	chrome.storage.local.set(details, function() {
-		console.log("Stored key pair at", email);
+		console.log("Stored key at", email);
 		window.location.reload();
 	});
 }
