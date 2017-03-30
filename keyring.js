@@ -43,11 +43,16 @@ function storeKey(name, email, pubKey) {
 
 function setEmailList() {
 	chrome.storage.local.get(function(keys) {
-		var emailList = document.getElementById("emails");
+		var pubList = document.getElementById("pubEmails");
+		var privList = document.getElementById("privEmails");
 		for(var key in keys) {
 			var item = document.createElement("li");
 			item.innerHTML = key;
-			emailList.appendChild(item);
+			if(keys[key].privKey !== undefined) {
+				privList.appendChild(item);
+			} else {
+				pubList.appendChild(item);
+			}
 		}
 	});
 }
