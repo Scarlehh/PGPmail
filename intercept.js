@@ -75,16 +75,36 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 							chrome.storage.local.get(sdk.User.getEmailAddress(), function(keys) {
 								//var passphrase = prompt("Enter your passphrase");
 								var div = document.createElement("div");
-								div.id="passphrasePopup";
-								div.style="width:200px; height:80px; padding:20px; background-color:gray; position:absolute; top:50%; left:30%; display:block;"
-								var pwDiv = document.createElement("div");
+								div.id = "passphrasePopup";
+								div.style = "width: 200px; \
+                                             height: 80px; \
+                                             padding: 10px 10px 30px 10px; \
+                                             background-color: #f1f1f1; \
+                                             background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1); \
+                                             position: absolute; \
+                                             top: 50%; \
+                                             left: 50%; \
+                                             margin: -70px 0 0 -170px; \
+                                             display: block; \
+                                             border: 1px solid rgba(0,0,0,0.1);"
+
+								var pwDiv = document.createElement("h3");
+								pwDiv.style = "margin: 5px";
 								pwDiv.innerHTML = "Enter Passphrase";
+
 								var input = document.createElement("input");
 								input.id="pgpPassphrase";
-								input.type="password";
+								input.className = "gbqfif";
+								input.style = "border: 1px solid rgba(0,0,0,0.1); \
+                                               margin: 5px; \
+                                               z-index: 6; \
+                                               left: 0px;";
+								input.type = "password";
+
 								var button = document.createElement("button");
 								button.innerHTML = "Done";
-								button.className = "btn btn-danger btn-xs";
+								button.className = "T-I T-I-KE";
+								button.style = "margin: 5px";
 								button.onclick = function() {
 									var passphrase = document.getElementById("pgpPassphrase").value;
 									document.getElementById("passphrasePopup").remove();
@@ -101,6 +121,7 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 										});
 									});
 								};
+
 								div.appendChild(pwDiv);
 								div.appendChild(input);
 								div.appendChild(button);
