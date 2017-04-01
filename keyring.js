@@ -87,12 +87,95 @@ function exportKey() {
 	var button = event.target;
 	chrome.storage.local.get(button.id, function(key) {
 		infoBox(key[button.id]["pubKey"]);
-		//var result = JSON.stringify(key);
-		//var url = 'data:application/json;base64,' + btoa(result);
-		//chrome.downloads.download({
-		//	url: url,
-		//	filename: 'filename_of_exported_file.json'
-		//});
+	});
+};
+
+function editBox(emailAddress, key) {
+	var div = document.createElement("div");
+	div.id = "editPopup";
+	div.className = "container"
+	div.style = "z-index: 99; \
+                 width: 100%; \
+                 position: absolute; \
+                 top: 0%; \
+                 left: 0%; \
+                 display: block;"
+
+	var form = document.createElement("div");
+	form.className = "form-group"
+	var name = document.createElement("input");
+	name.style = "margin: 5px";
+	name.className = "form-control keyEdit";
+	name.type = "text";
+	name.placeholder="Name";
+	name.name="name";
+	name.value = key.name;
+	var email = document.createElement("input");
+	email.style = "margin: 5px";
+	email.className = "form-control keyEdit";
+	email.type = "email";
+	email.placeholder="Email";
+	email.name="email";
+	email.style = "margin: 5px";
+	email.value = emailAddress;
+	var pubKey = document.createElement("textarea");
+	pubKey.style = "margin: 5px";
+	pubKey.className = "form-control keyEdit";
+	pubKey.type = "text";
+	pubKey.placeholder="Public Key";
+	pubKey.name="pubkey";
+	pubKey.style = "margin: 5px";
+	pubKey.rows="20";
+	pubKey.value = key.pubKey;
+	var privKey = document.createElement("textarea");
+	privKey.style = "margin: 5px";
+	privKey.className = "form-control keyEdit";
+	privKey.type = "text";
+	privKey.placeholder="Private Key (Optional)";
+	privKey.name="privkey";
+	privKey.style = "margin: 5px";
+	privKey.rows="20";
+	if(key.privKey !== undefined) {
+		privKey.value = key.privKey;
+	}
+
+	form.appendChild(name);
+	form.appendChild(email);
+	form.appendChild(pubKey);
+	form.appendChild(privKey);
+
+	var button = document.createElement("button");
+	button.innerHTML = "Done";
+	button.className = "btn btn-success";
+	button.style = "margin: 5px";
+	button.onclick = function() {
+		document.getElementById("keyring").style="";
+		var elements = document.getElementsByClassName("keyEdit");
+		document.getElementById("editPopup").remove();
+		console.log(elements);
+		if(privKey.value === "") {
+			storeKey(name.value,
+					 email.value,
+					 pubKey.value);
+		} else {
+			storeKeyPair(name.value,
+						 email.value,
+						 pubKey.value,
+						 privKey.value);
+		}
+	};
+
+	div.appendChild(form);
+	div.appendChild(button);
+	document.body.appendChild(div);
+
+	document.getElementById("keyring").style="visibility: hidden";
+}
+
+function editKey() {
+	var button = event.target;
+	chrome.storage.local.get(button.id, function(key) {
+		editBox(button.id, key[button.id]);
 	});
 };
 
@@ -110,14 +193,22 @@ function setEmailList() {
 			xbutton.onclick = removeKey;
 			xbutton.id = key;
 			xbutton.className = "btn btn-danger btn-xs"
+			// Set edit button
+			editButton = document.createElement("button");
+			editButton.innerHTML = "&#9998;";
+			editButton.style.display = "inline";
+			editButton.style.margin = "5px";
+			editButton.onclick = editKey;
+			editButton.id = key;
+			editButton.className = "btn btn-warning btn-xs"
 			// Set export button
-			ebutton = document.createElement("button");
-			ebutton.innerHTML = "&#8599;";
-			ebutton.style.display = "inline";
-			ebutton.style.margin = "5px";
-			ebutton.onclick = exportKey;
-			ebutton.id = key;
-			ebutton.className = "btn btn-info btn-xs"
+			exportButton = document.createElement("button");
+			exportButton.innerHTML = "&#8599;";
+			exportButton.style.display = "inline";
+			exportButton.style.margin = "5px";
+			exportButton.onclick = exportKey;
+			exportButton.id = key;
+			exportButton.className = "btn btn-info btn-xs"
 			// Set url
 			p = document.createElement('p');
 			p.style.display = "inline"
@@ -125,8 +216,9 @@ function setEmailList() {
 			// Stick inside div
 			div = document.createElement("div")
 			div.appendChild(xbutton);
+			div.appendChild(editButton);
+			div.appendChild(exportButton);
             div.appendChild(p);
-			div.appendChild(ebutton);
 
 			if(keys[key].privKey !== undefined) {
 				privList.appendChild(div);
