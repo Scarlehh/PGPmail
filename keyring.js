@@ -121,7 +121,7 @@ function setEmailList() {
 			// Set url
 			p = document.createElement('p');
 			p.style.display = "inline"
-			p.innerText += key;
+			p.innerText += keys[key].name + " (" + key + ")";
 			// Stick inside div
 			div = document.createElement("div")
 			div.appendChild(xbutton);
