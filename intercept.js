@@ -73,18 +73,38 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 						// If the message is encrypted
 						if(isEncrypted.test(rawMessage)) {
 							chrome.storage.local.get(sdk.User.getEmailAddress(), function(keys) {
-								var passphrase = prompt("Enter your passphrase");
-								var key = keys[sdk.User.getEmailAddress()];
-								decryptKey(key["privKey"], passphrase).then(function(decryptedKey) {
-									decrypt(rawMessage, decryptedKey).then(function(plaintext) {
-										var html = "";
-										var lines = plaintext.data.split("\n");
-										for(line in lines) {
-											html += lines[line] + "<br>";
-										}
-										document.getElementById(message.id).firstChild.innerHTML = html;
+								//var passphrase = prompt("Enter your passphrase");
+								var div = document.createElement("div");
+								div.id="passphrasePopup";
+								div.style="width:200px; height:80px; padding:20px; background-color:gray; position:absolute; top:50%; left:30%; display:block;"
+								var pwDiv = document.createElement("div");
+								pwDiv.innerHTML = "Enter Passphrase";
+								var input = document.createElement("input");
+								input.id="pgpPassphrase";
+								input.type="password";
+								var button = document.createElement("button");
+								button.innerHTML = "Done";
+								button.className = "btn btn-danger btn-xs";
+								button.onclick = function() {
+									var passphrase = document.getElementById("pgpPassphrase").value;
+									document.getElementById("passphrasePopup").remove();
+
+									var key = keys[sdk.User.getEmailAddress()];
+									decryptKey(key["privKey"], passphrase).then(function(decryptedKey) {
+										decrypt(rawMessage, decryptedKey).then(function(plaintext) {
+											var html = "";
+											var lines = plaintext.data.split("\n");
+											for(line in lines) {
+												html += lines[line] + "<br>";
+											}
+											document.getElementById(message.id).firstChild.innerHTML = html;
+										});
 									});
-								});
+								};
+								div.appendChild(pwDiv);
+								div.appendChild(input);
+								div.appendChild(button);
+								document.body.appendChild(div);
 							});
 						}
 					}
