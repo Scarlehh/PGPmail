@@ -37,6 +37,10 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 		div.appendChild(input);
 		div.appendChild(button);
 		document.body.appendChild(div);
+
+		// Auto focus input box
+		input.focus();
+		input.select();
 	}
 
 	sdk.Compose.registerComposeViewHandler(function(composeView) {
