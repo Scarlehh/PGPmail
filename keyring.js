@@ -47,6 +47,7 @@ function removeKey() {
 	window.location.reload();
 }
 
+// Popup box for displaying public key to be exported
 function infoBox(text) {
 	var div = document.createElement("div");
 	div.id = "infoPopup";
@@ -90,6 +91,7 @@ function exportKey() {
 	});
 };
 
+// Popup of edit boxes for key to be edited
 function editBox(emailAddress, key) {
 	var div = document.createElement("div");
 	div.id = "editPopup";
@@ -179,6 +181,7 @@ function editKey() {
 	});
 };
 
+// Set the popup list of public/private keys
 function setEmailList() {
 	chrome.storage.local.get(function(keys) {
 		var pubList = document.getElementById("pubEmails");
@@ -229,6 +232,7 @@ function setEmailList() {
 	});
 }
 
+// Listen for new key generation/additions
 document.addEventListener('DOMContentLoaded', function() {
 	// Backend for key save
     var keySaveButton = document.getElementById('keySaveButton');
