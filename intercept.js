@@ -128,13 +128,21 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 
 									var key = keys[sdk.User.getEmailAddress()];
 									decryptKey(key["privKey"], passphrase).then(function(decryptedKey) {
-										decrypt(rawMessage, decryptedKey).then(function(plaintext) {
-											var html = "";
-											var lines = plaintext.data.split("\n");
-											for(line in lines) {
-												html += lines[line] + "<br>";
-											}
-											document.getElementById(message.id).firstChild.innerHTML = html;
+										var sender = event.messageView.getSender().emailAddress;
+										chrome.storage.local.get(sender, function(keys) {
+											var sigKey = keys[sender];
+											decrypt(rawMessage, sigKey["pubKey"], decryptedKey)
+												.then(function(plaintext) {
+													var html = "";
+													if(plaintext.signatures[0].valid) {
+														html += "<h4 style='background-color: #FCF8E3; border: 1px solid rgba(0, 0, 0, 0.0980392); padding: 10px'>Message has been verified <img src="+chrome.extension.getURL("resources/images/verified.png")+" style='height:15px'></h4>";
+													}
+													var lines = plaintext.data.split("\n");
+													for(line in lines) {
+														html += lines[line] + "<br>";
+													}
+													document.getElementById(message.id).firstChild.innerHTML = html;
+												});
 										});
 									});
 								});
