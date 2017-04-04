@@ -153,8 +153,12 @@ InboxSDK.load('1.0', 'sdk_PGPmail_b4932b6799').then(function(sdk) {
 												.then(function(plaintext) {
 													var html = "";
 													// Display verified box is signing was successfully verified
-													if(plaintext.signatures[0].valid) {
-														html += "<h4 style='background-color: #FCF8E3; border: 1px solid rgba(0, 0, 0, 0.0980392); padding: 10px'>Message has been verified <img src="+chrome.extension.getURL("resources/images/verified.png")+" style='height:15px'></h4>";
+													try {
+														if(plaintext.signatures[0].valid) {
+															html += "<h4 style='background-color: #FCF8E3; border: 1px solid rgba(0, 0, 0, 0.0980392); padding: 10px'>Message has been verified <img src="+chrome.extension.getURL("resources/images/verified.png")+" style='height:15px'></h4>";
+														}
+													} catch(e) {
+														console.log("Not valid");
 													}
 													// Display message where encrypted message was
 													var lines = plaintext.data.split("\n");
